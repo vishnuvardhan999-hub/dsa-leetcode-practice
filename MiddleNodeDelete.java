@@ -63,3 +63,41 @@ class Solution {
     }
    
 }
+
+/*
+ * APPROACH: Two Pointers (Slow & Fast) + Prev Pointer
+ * ----------------------------------------------------
+ *
+ * The idea is to find the middle node in a single pass without
+ * knowing the total length of the list.
+ *
+ * HOW IT WORKS:
+ * -------------
+ * Three pointers are used:
+ *   - slow  : moves one step at a time
+ *   - fast  : moves two steps at a time
+ *   - prev  : always stays one step behind slow
+ *
+ * Because fast moves twice as fast as slow, when fast reaches
+ * the end of the list, slow will be exactly at the middle node.
+ * And prev will be just before that middle node.
+ *
+ * STEP-BY-STEP with Example [1, 3, 4, 7, 1, 2, 6]:
+ * --------------------------------------------------
+ * Start : slow=1, fast=1, prev=null
+ * Step 1: prev=1,  slow=3,  fast=4
+ * Step 2: prev=3,  slow=4,  fast=1
+ * Step 3: prev=4,  slow=7,  fast=null  → loop ends
+ *
+ * Now slow is at node 7 (the middle), prev is at node 4.
+ * Do: prev.next = slow.next  →  4 → 1 (skips 7)
+ * Result: [1, 3, 4, 1, 2, 6] ✓
+ *
+ * EDGE CASE:
+ * ----------
+ * If the list has only 1 node (head.next == null), there is
+ * no middle to delete — just return null directly.
+ *
+ * Time Complexity : O(n) — single pass through the list
+ * Space Complexity: O(1) — only 3 extra pointers used
+ */
