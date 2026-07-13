@@ -63,7 +63,7 @@ class Solution {
         while (left < right) {
             leftmax = Math.max(leftmax, height[left]);
             rightmax = Math.max(rightmax, height[right]);
-            if (leftmax <= rightmax) {
+            if (leftmax < rightmax) {
                 sum = sum + leftmax - height[left];
                 left++;
             } else {
@@ -93,12 +93,15 @@ class Solution {
  * We don't need to know BOTH maxes exactly — we only need the smaller one,
  * because that's what limits the water level.
  *
- * If leftmax <= rightmax:
- *   We're sure the right side has a wall at least as tall as leftmax.
+ * If leftmax < rightmax:
+ *   We're sure the right side has a taller wall than leftmax.
  *   So the water at 'left' = leftmax - height[left].
  *   Process left, then advance left++.
  *
- * If leftmax > rightmax:
+ * If leftmax >= rightmax (else branch):
+ *   rightmax is the limiting side — process right.
+ *   This also handles the equal case (leftmax == rightmax):
+ *   both sides are equally tall so either can be processed; we pick right.
  *   We're sure the left side has a wall taller than rightmax.
  *   So the water at 'right' = rightmax - height[right].
  *   Process right, then retreat right--.
